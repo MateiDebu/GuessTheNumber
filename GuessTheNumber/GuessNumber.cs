@@ -8,11 +8,11 @@ namespace GuessTheNumber
 {
     public class GuessNumber
     {
-        private int number;
+        private readonly int number;
         public GuessNumber()
         {
             Random random = new Random();
-            number = random.Next(0, 100);
+            number = random.Next(0, 101);
         }
         public void Guess()
         {
@@ -22,7 +22,11 @@ namespace GuessTheNumber
             do
             {
                 string str = Console.ReadLine();
-                guessNumber = int.Parse(str);
+                while (!int.TryParse(str, out guessNumber))
+                {
+                    Console.WriteLine("The number is not valid! Try another number");
+                    str = Console.ReadLine();
+                }
 
                 if (guessNumber < number)
                 {
@@ -37,7 +41,7 @@ namespace GuessTheNumber
                 {
                     Console.WriteLine("The number is correct!");
                 }
-                   
+
             } while (guessNumber != number);
 
             Console.WriteLine("The game is over!");
